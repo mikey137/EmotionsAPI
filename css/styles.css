@@ -11173,7 +11173,7 @@ body {
 #home_page{
   position: relative;
   width: 100%;
-  height: auto;
+  height: 100vh;
   min-height: 35rem;
   padding: 15rem 0;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url("https://images.unsplash.com/photo-1617791160536-598cf32026fb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2159&q=80");
@@ -11204,6 +11204,50 @@ body {
 
 
 }
+#prompt_display{
+  text-align: center;
+}
+
+#journal_entry{
+  background: rgba(255, 255, 255, .6);
+  overflow-wrap: break-word;
+}
+
+#journal{
+  background: rgba(255, 255, 255, .2);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+  visibility: hidden;
+}
+
+#journal_entry{
+  width: 80%;
+  height: 60%;
+  text-align: justify;
+  font-size: 2rem;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+#journal_toggle{
+  visibility: hidden;
+  opacity: .5;
+  background: white;
+  color: black;
+}
+
+
+
+
+
+
 
 @media(max-width: 762px){
   .btn{
@@ -11216,33 +11260,7 @@ body {
 
 
 
-.cursor::after {
-  content:'';
-  display:inline-block;
-  margin-left:3px;
-  background-color:white;
-  animation-name:blink;
-  animation-duration:0.5s;
-  animation-iteration-count: infinite;
-}
-h1.cursor::after {
-  height:4rem;
-  width:13px;
-}
-@keyframes blink {
-  0% {
-    opacity:1;
-  }
-  49% {
-    opacity:1;
-  }
-  50% {
-    opacity:0;
-  }
-  100% {
-    opacity:0;
-  }
-}
+
 
 
 @keyframes animated-text{

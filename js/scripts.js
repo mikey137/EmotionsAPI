@@ -248,6 +248,23 @@ const moods = [
 
 ]
 
+function displayJournal(){
+    $('#journal').css("visibility","visible")
+    $('.text-center').css("visibility","hidden")
+    $('#video_toggle').css("visibility","hidden")
+    $('#journal_toggle').css("visibility","hidden")
+}
+
+function closeJournal(){
+    $('#journal').css("visibility","hidden")
+    $('.text-center').css("visibility","visible")
+    $('#video_toggle').css("visibility","visible")
+    $('#journal_toggle').css("visibility","visible")
+}
+
+
+document.getElementById("close_btn").addEventListener("click", closeJournal)
+
 
 function backToParentMood(){
     let childMood = $('#h1ID').text()
@@ -257,7 +274,7 @@ function backToParentMood(){
         window.location.href = "negativeEmotions.html"
     }else{
         let parentMood = findParentMood(childMood)
-        getWord(parentMood)
+        generateEmotionPage(parentMood)
     }
 
 }
@@ -276,29 +293,24 @@ function findParentMood(childMood){
 function getMoodFromButtonText(id){
     let word = document.getElementById(id).textContent
     console.log(word)
-    getWord(word)
+    generateEmotionPage(word)
 }
 
-function getWord(word){
-
+function changeButtonTextToSysnonyms(word){
     var uniquePointer = 0
-
-    changeVideoButtonText()
-
     let mood = moods.filter(i=>i.name===word)[0]
+
     console.log(mood)
+
     if(mood !== undefined){
         let sysnonyms = mood.sysnonyms
         $('#sysnonyms_container').empty()
 
-    
         sysnonyms.forEach(sysnonym=>{
             let link = document.createElement('a')
             link.id = "link_"+ uniquePointer
             uniquePointer ++
             let linkText = document.createTextNode(sysnonym)
-
-            
 
             link.appendChild(linkText)
             link.title = sysnonym
@@ -309,8 +321,9 @@ function getWord(word){
        
         })
     }
-    
+}
 
+function GetResponsesAndDisplay(word){
     let config ={
         headers: {
             authorization: '563492ad6f917000010000015d202598eb8f4404ac259fcc54e9d8a3',
@@ -331,9 +344,6 @@ function getWord(word){
       let definition = responses[0].data[0].shortdef[0]
       addDefinition(definition)
 
-      
-      
-      
       let isVideoOn 
       if(responses[2].data.total === 0 && responses[3].data.total_results !== 0){
         switchToVideoAll(responses)
@@ -348,56 +358,64 @@ function getWord(word){
       }
        
       $("#video_toggle").click((e)=>{
-        
-        if(isVideoOn || responses[3].data.total_results === 0){
-            isVideoOn = false
-            changeBackgroundImageNotFound(responses)
-            $('#video_toggle').text('Show Video')
+            if(isVideoOn || responses[3].data.total_results === 0){
+                isVideoOn = false
+                changeBackgroundImageNotFound(responses)
+                $('#video_toggle').text('Show Video')
             
-        }else{
+            }else{
             isVideoOn = true
-            switchToVideoAll(responses)
+                switchToVideoAll(responses)
             
-        }
-      })
-
-      
-      
+            }
+        })
     }) 
   
     .catch((error)=>{
       console.log(error)
     })
+}
 
-    changeH1(word)
+function switchToVideoAll(responses){
+    switchToVideoBackground(responses)
+    hideBackgroundImg()
+    $('#video_toggle').text('Stop Video')
+    
+}
 
-    function switchToVideoAll(responses){
-            switchToVideoBackground(responses)
-            hideBackgroundImg()
-            $('#video_toggle').text('Stop Video')
-            
+function switchToVideoBackground(responses){
+    if(responses[3].data.total_results == 0){
+        let imgLocation = "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png"
+        changeBackground(imgLocation) 
+    }else{
+    let moodVideo = responses[3].data.videos[0].video_files[0].link
+    $("#video")[0].src = moodVideo
+    $("#video")[0].load()
+    $("#video")[0].play()
     }
-
-    function switchToVideoBackground(responses){
-        if(responses[3].data.total_results == 0){
-            let imgLocation = "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png"
-            changeBackground(imgLocation) 
-        }else{
-        let moodVideo = responses[3].data.videos[0].video_files[0].link
-        $("#video")[0].src = moodVideo
-        $("#video")[0].load()
-        $("#video")[0].play()
-        }
-        
-
-    }
-
-
+    
 
 }
 
-  function changeH1(newEmotion){
-      typePhrases(newEmotion, document.getElementById("h1ID"))
+
+function generateEmotionPage(word){
+
+    $('#typing').empty()
+
+    makeJournalButtonVisable()
+
+    changeEmotionInH1(word)
+
+    changeVideoButtonText()
+
+    changeButtonTextToSysnonyms(word)
+
+    GetResponsesAndDisplay(word)
+
+}
+
+  function changeEmotionInH1(newEmotion){
+      typePhrases(newEmotion, document.getElementById("h1ID"), 200)
 
   }
 
@@ -405,14 +423,7 @@ function getWord(word){
       document.getElementById("h2ID").innerHTML = newDefinition
   }
 
-  function changeButtons(a,b,c,d,e,f){
-    document.getElementById("btn1").innerHTML = a
-    document.getElementById("btn2").innerHTML = b
-    document.getElementById("btn3").innerHTML = c
-    document.getElementById("btn4").innerHTML = d
-    document.getElementById("btn5").innerHTML = e
-    document.getElementById("btn6").innerHTML = f
-  }
+  
 
   function changeBackgroundImageNotFound(responses){
     if(responses[2].data.total == 0){
@@ -449,6 +460,11 @@ function getWord(word){
 
   }
 
+  function makeJournalButtonVisable(){
+    $('#journal_toggle').css("visibility","visible")
+
+}
+
   function makeVideoButtonInvisable(){
     $('#video_toggle').css("visibility","hidden")
 
@@ -464,12 +480,10 @@ function getWord(word){
 
 
 
-function typePhrases(phrase, textDisplay){
+function typePhrases(phrase, textDisplay,speed){
     let i=0
     let currentPhrase = []
     
-    
-
     function incrementPhrase(){
         if(i < phrase.length){
             currentPhrase.push(phrase[i])
@@ -477,14 +491,32 @@ function typePhrases(phrase, textDisplay){
             i++
             
         }
-        setTimeout(incrementPhrase, 200)  
+        setTimeout(incrementPhrase, speed)  
     }
     
     incrementPhrase()
     
 }
 
-typePhrases('Hello, how are you feeling?', document.getElementById('typing'))
+function generateJournalPrompt(){
+    
+    let display = document.getElementById('prompt_display')
+
+    const prompts = ["How well does the image represent the emotion? Why is/isn't it a good representation?", "How well does the video resprent the emotion? Why is/isn't it a good representation?", "Describe what happened the last time you felt this emotion?", "What does your body feel like when you experience this emotion?"]
+
+    let randomPromptIndex = Math.floor(Math.random() * prompts.length)
+
+    let randomPrompt = prompts[randomPromptIndex]
+
+    console.log(randomPrompt)
+
+    typePhrases(randomPrompt, display, 150)
+}
+
+document.getElementById("prompt_btn").addEventListener("click", generateJournalPrompt)
+
+
+typePhrases('Hello, how are you feeling?', document.getElementById('typing'), 75)
 
 
 
