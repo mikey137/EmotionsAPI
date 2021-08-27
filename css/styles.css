@@ -11131,7 +11131,7 @@ body {
   position: absolute;
   right: 50%;
   transform: translateX(50%) ;
-  bottom: 0;
+  bottom: 25px;
   width:fit-content;
   display: flex;
   flex-wrap: wrap;
@@ -11165,7 +11165,7 @@ body {
 .masthead {
   position: relative;
   width: 100%;
-  height: auto;
+  height: 100vh;
   min-height: 35rem;
   padding: 15rem 0;
 }
@@ -11206,6 +11206,7 @@ body {
 }
 #prompt_display{
   text-align: center;
+  margin: 0;
 }
 
 #journal_entry{
@@ -11214,7 +11215,7 @@ body {
 }
 
 #journal{
-  background: rgba(255, 255, 255, .2);
+  background: rgba(255, 255, 255, .0);
   position: absolute;
   bottom: 0;
   right: 0;
@@ -11231,7 +11232,7 @@ body {
   width: 80%;
   height: 60%;
   text-align: justify;
-  font-size: 2rem;
+  font-size: 16px;
   word-wrap: break-word;
   word-break: break-all;
 }
