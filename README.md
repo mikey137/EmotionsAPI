@@ -7,3 +7,9 @@ This app is intended to be an interactive emotions wheel. Ideally it will be use
 
 
 Technolgy used: HTML/CSS/JavaScript/jQuery
+
+![Alt text](img/screenshot1.png?raw=true "Title")
+
+![Alt text](img/screenshot2.png?raw=true "Title")
+
+![Alt text](img/screenshot3.png?raw=true "Title")
