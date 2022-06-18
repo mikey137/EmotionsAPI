@@ -710,6 +710,10 @@ progress {
   width: 50%;
 }
 
+.text-background-blur {
+  backdrop-filter: blur(60px);
+}
+
 .row-cols-3 > * {
   flex: 0 0 auto;
   width: 33.3333333333%;

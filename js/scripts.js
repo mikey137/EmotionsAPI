@@ -1,12 +1,5 @@
-/*!
-* Start Bootstrap - Grayscale v7.0.2 (https://startbootstrap.com/theme/grayscale)
-* Copyright 2013-2021 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-grayscale/blob/master/LICENSE)
-*/
-
 /* eslint no-undef: 0 */
 window.addEventListener('DOMContentLoaded', () => {
-// Navbar shrink function
   const navbarShrink = () => {
     const navbarCollapsible = document.body.querySelector('#mainNav');
     if (!navbarCollapsible) {
@@ -19,10 +12,8 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Shrink the navbar
   navbarShrink();
 
-  // Shrink the navbar when page is scrolled
   document.addEventListener('scroll', navbarShrink);
 
   // Activate Bootstrap scrollspy on the main nav element
@@ -210,7 +201,7 @@ const moods = [
   },
   {
     name: 'sad',
-    sysnonyms: ['depressed', 'hurt', 'berett', 'melancholy', 'subdued', 'aggrieved', 'discouraged'],
+    sysnonyms: ['depressed', 'hurt', 'bereft', 'melancholy', 'subdued', 'aggrieved', 'discouraged'],
   },
   {
     name: 'depressed',
@@ -221,7 +212,7 @@ const moods = [
     sysnonyms: ['deflated', 'injured'],
   },
   {
-    name: 'berett',
+    name: 'bereft',
     sysnonyms: ['disconsolate', 'inconsolable'],
   },
   {
